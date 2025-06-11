@@ -1,23 +1,22 @@
-class Solution(object):
-    def removeDuplicates(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        k = 0
-        twice = False
+int removeDuplicates(int* nums, int numsSize) {
+    int* start = nums;
+    int* end = nums + 1;
+    bool twice = false;
+    while (end < nums + numsSize) {
+        if (*end > *start) {
+            twice = false;
+            start++;
+            *start = *end;
+            end++;
+        } else if (!twice && *start == *end) {
+            twice = true;
+            start++;
+            *start = *end;
+            end++;
+        } else {
+            end++;
+        }
+    }
 
-        for i in range(1, len(nums), 1):
-            if nums[i] > nums[k]:
-                twice = False
-                k += 1
-                nums[k] = nums[i]
-                continue 
-
-            elif twice is False and nums[i] == nums[k]:
-                twice = True
-                k += 1
-                nums[k] = nums[i]
-                continue
-
-        return k + 1
+    return start - nums + 1;
+}
